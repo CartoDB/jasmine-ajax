@@ -207,8 +207,12 @@ extend(FakeXMLHttpRequest, {
       },
 
       getResponseHeader: function(name) {
+        var resultHeader = null;
+        if (!this.responseHeaders) {
+          return resultHeader;
+        }
+
         name = name.toLowerCase();
-        var resultHeader;
         for(var i = 0; i < this.responseHeaders.length; i++) {
           var header = this.responseHeaders[i];
           if (name === header.name.toLowerCase()) {
@@ -223,6 +227,10 @@ extend(FakeXMLHttpRequest, {
       },
 
       getAllResponseHeaders: function() {
+        if (!this.responseHeaders) {
+          return null;
+        }
+
         var responseHeaders = [];
         for (var i = 0; i < this.responseHeaders.length; i++) {
           responseHeaders.push(this.responseHeaders[i].name + ': ' +
